@@ -1,12 +1,4 @@
-- name: intall magma on the hosts
-  hosts: magma
-  # vars_files:
-  #   - 'defaults/main.yml'
-  tasks:
-    - include: 'magma_install.yml'
-    - include: 'magma_erld.yml'
+# tasks/main.yml
 
-- name: join magma cluster
-  hosts: magma_join
-  tasks:
-    - include: 'magma_join.yml'
+- include: 'magma_install.yml'
+- include: 'magma_erld.yml'
