@@ -1,0 +1,19 @@
+user: "{{ ansible_ssh_user }}"
+proj_name: magma
+# venv_home: "{{ ansible_user_home }}"
+# venv_path: "{{ venv_home }}/{{ proj_name }}"
+# proj_dirname: project
+# proj_path: /home/{{ ansible_ssh_user }}/build/{{ proj_name }}
+erld_repo_url: "https://github.com/ShoreTel-Inc/erld.git"
+repo_url: git@github.com:RomanShestakov/magma.git
+magma_tmp: /tmp/magma
+magma_daemon_name: magmad
+magma_install_dir: /usr/lib/erlang/lib
+magma_data_dir: /var/lib/magma
+magma_config_dir: /etc/magma
+http_port: 8198
+handoff_port: 8199
+cookie: magma
+
+# erld_repo_url: https://github.com/ShoreTel-Inc/erld.git
+# riak_core_data_dir: /home/{{ ansible_ssh_user }}/magma/data

@@ -1,0 +1,34 @@
+# file: tasks/magma_install.yml
+
+- name: MAGMA | checkout magma projects from github into /tmp/magma
+  git: repo={{ repo_url }} dest={{ magma_tmp }} accept_hostkey=yes
+  register: magma_downloaded
+
+- name: MAGMA | build magma in /tmp/magma
+  command: make chdir={{ magma_tmp }}
+  when: magma_downloaded.changed
+
+- name: MAGMA | make magma_install_dir - /usr/lib/erlang/lib
+  sudo: true
+  file: path={{ magma_install_dir }} state=directory owner={{ ansible_ssh_user }} mode=0755
+  when: magma_downloaded.changed
+
+- name: MAGMA | copy magma release from /tmp/magma into /usr/lib/erlang/lib/magma
+  sudo: true
+  command: cp -r {{ magma_tmp }}/_rel/{{ proj_name }} {{ magma_install_dir }}
+  when: magma_downloaded.changed
+
+- name: MAGMA | make /etc/magma to store sys.config
+  sudo: true
+  file: path={{ magma_config_dir }} state=directory mode=0755
+  when: magma_downloaded.changed
+
+- name: MAGMA | create sys.config from template and store in /etc/magma/sys.config
+  sudo: true
+  action: template src=templates/sys.config-template.j2 dest={{ magma_config_dir }}/sys.config mode=0755
+  when: magma_downloaded.changed
+
+- name: MAGMA | create magma-admin from template and store in /usr/lib/erlang/lib/magma/bin
+  sudo: true
+  action: template src=templates/magma-admin-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-admin mode=0755
+  when: magma_downloaded.changed

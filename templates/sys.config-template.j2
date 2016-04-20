@@ -1,0 +1,84 @@
+%% -*- erlang -*-
+[
+ %% Riak Core config
+ {riak_core, [
+              %% Cluster name
+              {cluster_name, "default"},
+
+              {platform_data_dir, "{{magma_data_dir}}" },
+
+              %% %% Default location of ringstate
+              {ring_state_dir, "{{magma_data_dir}}/ring" },
+
+              %% Default ring creation size.  Make sure it is a power of 2,
+              %% e.g. 16, 32, 64, 128, 256, 512 etc
+              {ring_creation_size, 16},
+
+              %% http is a list of IP addresses and TCP ports that the Riak
+              %% HTTP interface will bind.
+              %% {http, [ {"127.0.0.1", 8198 } ]},
+
+              {http, [ { "{{ansible_eth1.ipv4.address}}", {{http_port}} } ]},
+
+              %% https is a list of IP addresses and TCP ports that the Riak
+              %% HTTPS interface will bind.
+              %{https, [{ "127.0.0.1", 8098 }]},
+
+              %% default cert and key locations for https can be overridden
+              %% with the ssl config variable
+              %{ssl, [
+              %       {certfile, "etc/cert.pem"},
+              %       {keyfile, "etc/key.pem"}
+              %      ]},
+
+              %% riak_handoff_port is the TCP port that Riak uses for
+              %% intra-cluster data handoff.
+              %% {handoff_port, ${HANDOFF_PORT}8199 },
+
+              {handoff_port, {{handoff_port}} },
+
+              %{schema_dirs, ["./deps/riak_core/priv"]},
+              {schema_dirs, [ "{{magma_install_dir}}/magma/priv" ]}
+             ]},
+
+ {riak_api,
+  [
+   %% Other configs
+   {http,[{ "{{ansible_eth1.ipv4.address}}", {{http_port}} }]}
+   %% {https,[{"127.0.0.1",8069}]},
+   %% Other configs
+  ]},
+
+ {riak_control, [
+                 {enabled, true}
+                ]},
+
+ %% SASL config
+ {sasl, [
+         {sasl_error_logger, {file, "log/sasl-error.log"}},
+         {errlog_type, error},
+         {error_logger_mf_dir, "log/sasl"},      % Log directory
+         {error_logger_mf_maxbytes, 10485760},   % 10 MB max file size
+         {error_logger_mf_maxfiles, 5}           % 5 files max
+        ]},
+
+ {magma, [
+          %% {rabbitmq_host, "192.168.33.10" },
+          %% {rabbitmq_port, "5672"},
+          %% {rabbitmq_virtual_host, "magma"},
+          %% {rabbitmq_user, <<"magma">>},
+          %% {rabbitmq_password, <<"magma">>},
+          %% {job_root, "data/job_root" },
+          %% {logs_root, "data/logs" },
+          %% {config, "data/config" },
+          %% {reports, "data/reports" }
+         ]},
+
+ {lager, [
+	  {handlers, 	  [
+			   {lager_console_backend, debug},
+			   {lager_file_backend, [{file, "{{magma_tmp}}/log/error.log"}, {level, error}]},
+			   {lager_file_backend, [{file, "{{magma_tmp}}/log/console.log"}, {level, info}]}
+			  ]}
+	 ]}
+].
