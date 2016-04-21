@@ -1,7 +1,11 @@
 # file: tasks/magma_install.yml
 
 - name: MAGMA | checkout magma projects from github into /tmp/magma
-  git: repo={{ repo_url }} dest={{ magma_tmp }} accept_hostkey=yes
+  git: repo={{ repo_url }}
+       dest={{ magma_tmp }}
+       accept_hostkey=yes
+       force=yes
+       key_file={{ rsa_key }}
   register: magma_downloaded
 
 - name: MAGMA | build magma in /tmp/magma
