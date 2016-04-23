@@ -14,7 +14,7 @@ magma_config_dir: /etc/magma
 http_port: 8198
 handoff_port: 8199
 cookie: magma
-rsa_key: '/root/.ssh/id_rsa'
+rsa_key: '/root/.ssh/magma'
 
 
 # erld_repo_url: https://github.com/ShoreTel-Inc/erld.git
