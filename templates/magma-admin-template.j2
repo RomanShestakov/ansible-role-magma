@@ -43,7 +43,7 @@ cd $RUNNER_BASE_DIR
 #     exit 1
 # fi
 
-NAME_ARG="-name {{node_name}}@{{ansible_eth1.ipv4.address}}"
+NAME_ARG="-name {{node_name}}@{{ip_address}}"
 
 # Learn how to specify node name for connection from remote nodes
 echo "$NAME_ARG" | grep '^-sname' > /dev/null 2>&1
