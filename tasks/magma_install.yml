@@ -28,10 +28,10 @@
 
 - name: MAGMA | create sys.config from template and store in /etc/magma/sys.config
   sudo: true
-  action: template src=templates/sys.config-template.j2 dest={{ magma_config_dir }}/sys.config mode=0755
+  action: template src=sys.config-template.j2 dest={{ magma_config_dir }}/sys.config mode=0755
   when: magma_downloaded.changed
 
 - name: MAGMA | create magma-admin from template and store in /usr/lib/erlang/lib/magma/bin
   sudo: true
-  action: template src=templates/magma-admin-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-admin mode=0755
+  action: template src=magma-admin-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-admin mode=0755
   when: magma_downloaded.changed
