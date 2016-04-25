@@ -15,7 +15,7 @@ http_port: 8198
 handoff_port: 8199
 cookie: magma
 rsa_key: '/root/.ssh/magma'
-
+ip_address: "{{ansible_eth1.ipv4.address}}"
 
 # erld_repo_url: https://github.com/ShoreTel-Inc/erld.git
 # riak_core_data_dir: /home/{{ ansible_ssh_user }}/magma/data

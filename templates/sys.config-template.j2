@@ -44,7 +44,7 @@
  {riak_api,
   [
    %% Other configs
-   {http,[{ "{{ansible_eth1.ipv4.address}}", {{http_port}} }]}
+   {http,[{ "{{ip_address}}", {{http_port}} }]}
    %% {https,[{"127.0.0.1",8069}]},
    %% Other configs
   ]},
