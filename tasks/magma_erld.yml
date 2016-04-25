@@ -13,29 +13,29 @@
     - ./configure
     - make
     - make install
-  when: erld_downloaded.changed
+  # when: erld_downloaded.changed
 
 - name: ERLD | make dir for magma daemon
   sudo: true
   file: path=/etc/magmad state=directory mode=0755
-  when: magma_downloaded.changed
+  # when: magma_downloaded.changed
 
 - name: ERLD | make /var/log/magmad
   sudo: true
   file: path=/var/log/magmad state=directory mode=0755
-  when: magma_downloaded.changed
+  # when: magma_downloaded.changed
 
 - name: ERLD | add cookie
   sudo: true
   action: template src=templates/cookie-template.j2 dest=/etc/magmad/cookie mode=0400
-  when: magma_downloaded.changed
+  # when: magma_downloaded.changed
 
 - name: ERLD | add erld init.d
   sudo: true
   action: template src=templates/magmad.init-template.j2 dest=/etc/init.d/magmad mode=0755
-  when: magma_downloaded.changed
+  # when: magma_downloaded.changed
 
 - name: ERLD | Start erld
   sudo: true
   service: name=magmad state=restarted
-  when: magma_downloaded.changed
+  # when: magma_downloaded.changed
