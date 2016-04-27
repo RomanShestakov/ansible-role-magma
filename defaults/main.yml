@@ -4,7 +4,7 @@ proj_name: magma
 # venv_path: "{{ venv_home }}/{{ proj_name }}"
 # proj_dirname: project
 # proj_path: /home/{{ ansible_ssh_user }}/build/{{ proj_name }}
-erld_repo_url: "https://github.com/ShoreTel-Inc/erld.git"
+erld_repo_url: "https://github.com/RomanShestakov/erld.git"
 repo_url: git@github.com:RomanShestakov/magma.git
 magma_tmp: /tmp/magma
 magma_daemon_name: magmad
