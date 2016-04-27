@@ -27,8 +27,9 @@
 # Uncomment and edit this if you're running from an environment that doesn't have HOME set (such as during boot):
 
 ## set -x
-export HOME=/home/vagrant
 
+## set HOME
+HOME="{{ ansible_env.HOME}}"
 NAME={{magma_daemon_name}}
 DESC="Erld daemon for magma app"
 ERLD="/usr/local/bin/erld"
