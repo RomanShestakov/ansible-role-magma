@@ -37,5 +37,5 @@
 
 - name: ERLD | Start erld
   sudo: true
-  service: name=magmad state=restarted enabled=yes
+  service: name=magmad state=restarted enabled=no
   # when: magma_downloaded.changed
