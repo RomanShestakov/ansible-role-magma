@@ -62,7 +62,7 @@ ERLD_DEBUG=-d
 
 echo NODE_NAME : ${NODE_NAME}
 
-ERL_COMMAND="$ERL -config $ERL_CONFIG -name $NODE_NAME -boot $ERL_BOOT -shutdown_time 5000 +W w"
+ERL_COMMAND="$ERL -config $ERL_CONFIG -name $NODE_NAME -set_cookie {{cookie}} -boot $ERL_BOOT -shutdown_time 5000 +W w"
 ERLD_COMMAND="$ERLD $ERLD_DEBUG -c $COOKIE_FILE -l $ERLD_LOG -p $PIDFILE -t $HEARTBEAT -T $HEARTBEAT_WARN -g $GRACE -r $RESTART_COUNT -i $RESTART_INTERVAL -M $ROTATION_MODULE -F $ROTATION_FUNCTION -- $ERL_COMMAND"
 
 checkroot() {
@@ -111,7 +111,7 @@ start() {
 	# Make sure epmd is running. There's no harm in running it several times and it doesn't
 	# need to be stopped so just run it simply here every time.
 	epmd -daemon
-	bake_cookie
+	# bake_cookie
 	echo -n "Starting the $DESC server... "
 	$ERLD_COMMAND
 	if [ "$?" -eq "0" ]; then
@@ -123,13 +123,13 @@ start() {
 	fi
 }
 
-bake_cookie() {
-	touch $COOKIE_FILE
-	chown root $COOKIE_FILE
-	chmod o= $COOKIE_FILE
-	chmod g=r $COOKIE_FILE
-	$ERL -boot start_clean -noshell -eval "io:fwrite(\"~s\", [magma_app:bake_cookie()])." -s init stop > $COOKIE_FILE
-}
+# bake_cookie() {
+# 	touch $COOKIE_FILE
+# 	chown root $COOKIE_FILE
+# 	chmod o= $COOKIE_FILE
+# 	chmod g=r $COOKIE_FILE
+# 	$ERL -boot start_clean -noshell -eval "io:fwrite(\"~s\", [magma_app:bake_cookie()])." -s init stop > $COOKIE_FILE
+# }
 
 stop() {
 	checkroot
