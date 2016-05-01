@@ -62,7 +62,7 @@ ERLD_DEBUG=-d
 
 echo NODE_NAME : ${NODE_NAME}
 
-ERL_COMMAND="$ERL -config $ERL_CONFIG -name $NODE_NAME -set_cookie {{cookie}} -boot $ERL_BOOT -shutdown_time 5000 +W w"
+ERL_COMMAND="$ERL -config $ERL_CONFIG -name $NODE_NAME -setcookie {{cookie}} -boot $ERL_BOOT -shutdown_time 5000 +W w"
 ERLD_COMMAND="$ERLD $ERLD_DEBUG -c $COOKIE_FILE -l $ERLD_LOG -p $PIDFILE -t $HEARTBEAT -T $HEARTBEAT_WARN -g $GRACE -r $RESTART_COUNT -i $RESTART_INTERVAL -M $ROTATION_MODULE -F $ROTATION_FUNCTION -- $ERL_COMMAND"
 
 checkroot() {
