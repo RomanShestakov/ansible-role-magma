@@ -1,0 +1,32 @@
+[Unit]
+Description=Erld daemon for magma app
+After=syslog.target
+
+[Service]
+#Type=simple
+WorkingDirectory="{{ ansible_env.HOME}}"
+Environment=HOME="{{ ansible_env.HOME}}"
+Environment=NAME={{magma_daemon_name}}
+Environment=ERLD="/usr/local/bin/erld"
+Environment=ERLD_LOG="/var/log/{{magma_daemon_name}}/{{magma_daemon_name}}.log"
+#Environment=ERL="/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput"
+Environment=ERL_CONFIG="{{magma_config_dir}}/sys.config"
+Environment=ERL_BOOT="/usr/lib/erlang/lib/magma/releases/1/magma"
+Environment=COOKIE_FILE="/etc/{{magma_daemon_name}}/cookie"
+Environment=NODE={{node_name}}
+Environment=NODE_NAME="$NODE@{{ip_address}}"
+Environment=TMPNODE="$NODE-tmp"
+#Environment=FULLNODE="'$NODE@`hostname -f`'"
+Environment=TIMEOUT=60
+Environment=HEARTBEAT=22
+Environment=HEARTBEAT_WARN=8
+Environment=GRACE=10
+Environment=RESTART_COUNT=3
+Environment=RESTART_INTERVAL=1200
+Environment=PIDFILE=/var/run/$NAME.pid
+Environment=LOCKDIR=/var/lock
+Environment=LOCKFILE=$LOCKDIR/$NAME
+
+#ExecStartPre=/usr/local/bin/epmd -daemon
+ExecStartPre=/usr/bin/bash -c "/usr/bin/systemctl set-environment FULLNODE='$NODE@`hostname -f`'"
+ExecStart=/usr/bin/echo "2+2"
