@@ -35,7 +35,25 @@
   action: template src=magmad.init-template.j2 dest=/etc/init.d/magmad mode=0755
   # when: magma_downloaded.changed
 
+- name: ERLD | Ensure the systemd directory exists
+  file:
+    name: "/etc/systemd/system/magmad.service.d"
+    state: directory
+    mode: 0755
+  # when: ansible_os_family == "RedHat"
+
+- name: ERLD | Use the conf directory when starting magma
+  template:
+    src: magmad_service.d_custom.conf-template.j2
+    dest: "/etc/systemd/system/magmad.service.d/custom.conf"
+  # when: ansible_os_family == "RedHat"
+  # register: postgresql_systemd_custom_conf
+
+- name: ERLD | add erld systemd script
+  sudo: true
+  action: template src=magmad.init-template.j2 dest=/etc/init.d/magmad mode=0755
+
 - name: ERLD | Start erld
   sudo: true
-  service: name=magmad state=restarted enabled=no
+  service: name=magmad state=restarted
   # when: magma_downloaded.changed
