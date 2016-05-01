@@ -6,6 +6,7 @@ proj_name: magma
 # proj_path: /home/{{ ansible_ssh_user }}/build/{{ proj_name }}
 erld_repo_url: "https://github.com/RomanShestakov/erld.git"
 repo_url: git@github.com:RomanShestakov/magma.git
+repo_version: "no_bake_cookie"
 magma_tmp: /tmp/magma
 magma_daemon_name: magmad
 magma_install_dir: /usr/lib/erlang/lib

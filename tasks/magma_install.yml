@@ -2,6 +2,7 @@
 
 - name: MAGMA | checkout magma projects from github into /tmp/magma
   git: repo={{ repo_url }}
+       version={{ repo_version}}
        dest={{ magma_tmp }}
        accept_hostkey=yes
        key_file={{ rsa_key }}
