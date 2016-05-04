@@ -13,5 +13,6 @@ galaxy_info:
   - system
 
 dependencies:
-  # - {role: ANXS.build-essential, tags: build-essential }
   - {role: geerlingguy.git, tags: git }
+  - {role: RomanShestakov.ansible-role-erlang, tags: erlang}
+  - {role: RomanShestakov.ansible-role-erlpmd, version: "v0.1", tags: erlpmd }
