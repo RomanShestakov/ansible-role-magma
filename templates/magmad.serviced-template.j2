@@ -3,10 +3,12 @@ Description=Erld daemon for magma app
 After=syslog.target
 
 [Service]
-Type=simple
-WorkingDirectory="{{ ansible_env.HOME}}"
-Environment=HOME="{{ ansible_env.HOME}}"
-Environment=NAME={{magma_daemon_name}}
+Type=notify
+User={{ user }}
+Group={{ group }}
+WorkingDirectory="{{ ansible_env.HOME }}"
+Environment=HOME="{{ ansible_env.HOME }}"
+Environment=NAME={{ magma_daemon_name }}
 Environment=ERLD="/usr/local/bin/erld"
 Environment=ERLD_LOG="/var/log/{{magma_daemon_name}}/{{magma_daemon_name}}.log"
 Environment=ERL="/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput"
@@ -16,7 +18,7 @@ Environment=COOKIE_FILE="/etc/{{magma_daemon_name}}/cookie"
 Environment=NODE={{node_name}}
 Environment=NODE_NAME="$NODE@{{ip_address}}"
 Environment=TMPNODE="$NODE-tmp"
-Environment=FULLNODE="'$NODE@`hostname -f`'"
+#Environment=FULLNODE="'$NODE@`hostname -f`'"
 Environment=TIMEOUT=60
 Environment=HEARTBEAT=22
 Environment=HEARTBEAT_WARN=8
@@ -27,5 +29,22 @@ Environment=PIDFILE=/var/run/$NAME.pid
 Environment=LOCKDIR=/var/lock
 Environment=LOCKFILE=$LOCKDIR/$NAME
 
-ExecStartPre=/usr/local/bin/epmd -daemon
-ExecStart=/usr/bin/echo "2+2"
+StandardOutput=journal
+StandardError=journal
+# WorkingDirectory={{ working_dir }}
+DeviceAllow=/dev/null rw
+PrivateTmp=true
+NoNewPrivileges=true
+Restart=always
+LimitNPROC=4
+LimitFSIZE=0
+ERL_COMMAND="$ERL -config $ERL_CONFIG -name $NODE_NAME -setcookie {{cookie}} -boot $ERL_BOOT -shutdown_time 5000 +W w"
+ERLD_COMMAND="$ERLD $ERLD_DEBUG -c $COOKIE_FILE -l $ERLD_LOG -p $PIDFILE -t $HEARTBEAT -T $HEARTBEAT_WARN -g $GRACE -r $RESTART_COUNT -i $RESTART_INTERVAL -M $ROTATION_MODULE -F $ROTATION_FUNCTION -- $ERL_COMMAND"
+
+ExecStart=$ERLD_COMMAND
+# FIXME add generic erlpmd helpers foir that instead of using epmd as a cli
+# ExecStop=/usr/bin/epmd -kill
+
+
+#ExecStartPre=/usr/local/bin/epmd -daemon
+#ExecStart=/usr/bin/echo "2+2"
