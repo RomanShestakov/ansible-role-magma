@@ -54,7 +54,7 @@
 
 - name: EPMD | Start epmd
   sudo: true
-  service: name=epmd.socket state=started
+  service: name=epmd.socket enabled=yes
 
 - name: ERLD | Start erld
   sudo: true
