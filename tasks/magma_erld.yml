@@ -48,21 +48,13 @@
 - name: reload systemd
   command: systemctl daemon-reload
 
-# - name: ERLD | Add epmd service
-#   sudo: true
-#   action: template src=epmd.service-template.j2 dest=/etc/systemd/system/epmd.service
-
-# - name: ERLD | Add epmd socket
-#   sudo: true
-#   action: template src=epmd.socket-template.j2 dest=/etc/systemd/system/epmd.socket
-
 # - name: ERLD | add erld systemd script
 #   sudo: true
 #   action: template src=magmad.init-template.j2 dest=/etc/init.d/magmad mode=0755
 
-# - name: ERLD | Start epmd
-#   sudo: true
-#   service: name=epmd state=started
+- name: EPMD | Start epmd
+  sudo: true
+  service: name=epmd.socket state=started
 
 - name: ERLD | Start erld
   sudo: true

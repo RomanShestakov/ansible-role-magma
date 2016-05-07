@@ -1,6 +1,8 @@
 [Unit]
-Description=Erld daemon for magma app
+Description="Erld daemon for magma app"
 After=syslog.target
+After=epmd.socket
+Requires=epmd.socket
 
 [Service]
 #Type=simple
@@ -16,7 +18,6 @@ Environment=COOKIE_FILE="/etc/{{magma_daemon_name}}/cookie"
 Environment=NODE={{node_name}}
 Environment=NODE_NAME="$NODE@{{ip_address}}"
 Environment=TMPNODE="$NODE-tmp"
-#Environment=FULLNODE="'$NODE@`hostname -f`'"
 Environment=TIMEOUT=60
 Environment=HEARTBEAT=22
 Environment=HEARTBEAT_WARN=8
@@ -27,6 +28,5 @@ Environment=PIDFILE=/var/run/$NAME.pid
 Environment=LOCKDIR=/var/lock
 Environment=LOCKFILE=$LOCKDIR/$NAME
 
-#ExecStartPre=/usr/local/bin/epmd -daemon
-ExecStartPre=/usr/bin/bash -c "/usr/bin/systemctl set-environment FULLNODE='$NODE@`hostname -f`'"
+#ExecStartPr=/usr/bin/bash -c "/usr/bin/systemctl set-environment FULLNODE='$NODE@`hostname -f`'"
 ExecStart=/usr/bin/echo "2+2"
