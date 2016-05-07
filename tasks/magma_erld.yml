@@ -43,7 +43,7 @@
 
 - name: ERLD | Use the conf directory when starting magma
   sudo: true
-  action: template src=magmad.serviced-template.j2 dest=/etc/systemd/system/magmad.service
+  action: template src=magmad.service-template.j2 dest=/etc/systemd/system/magmad.service
 
 - name: reload systemd
   command: systemctl daemon-reload
