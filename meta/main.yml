@@ -15,4 +15,3 @@ galaxy_info:
 dependencies:
   - {role: geerlingguy.git, tags: git }
   - {role: RomanShestakov.ansible-role-erlang, tags: erlang}
-  - {role: RomanShestakov.ansible-role-erlpmd, version: "v0.1", tags: erlpmd }
