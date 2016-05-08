@@ -36,3 +36,7 @@
   sudo: true
   action: template src=magma-admin-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-admin mode=0755
   # when: magma_downloaded.changed
+
+- name: MAGMA | create magma-start.sh and store in /usr/lib/erlang/lib/magma/bin
+  sudo: true
+  action: template src=magma-start.sh-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-start.sh mode=0755

@@ -33,4 +33,6 @@ Environment=HOME={{ ansible_env.HOME}}
 
 #ExecStart=/bin/sh -c "echo test > /tmp/test.txt"
 
-ExecStart=/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput -config {{magma_config_dir}}/sys.config -name {{node_name}}@{{ip_address}} -setcookie {{cookie}} -boot /usr/lib/erlang/lib/magma/releases/1/magma -shutdown_time 5000 +W w
+3 ExecStart=/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput -config {{magma_config_dir}}/sys.config -name {{node_name}}@{{ip_address}} -setcookie {{cookie}} -boot /usr/lib/erlang/lib/magma/releases/1/magma -shutdown_time 5000 +W w
+
+ExecStart=/usr/lib/erlang/lib/magma/bin/magma-start.sh
