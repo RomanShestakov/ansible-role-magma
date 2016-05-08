@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/local/bin/erl -setcookie magma -name {{node_name}}-tmp -eval "rpc:call('{{node_name}}@{{ip_address}}', init, stop, [])."
+exec /usr/local/bin/erl -setcookie magma -name {{node_name}}-tmp -eval "ok=rpc:call('{{node_name}}@{{ip_address}}', init, stop, [])." -s erlang halt
