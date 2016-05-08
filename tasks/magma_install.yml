@@ -40,3 +40,7 @@
 - name: MAGMA | create magma-start.sh and store in /usr/lib/erlang/lib/magma/bin
   sudo: true
   action: template src=magma-start.sh-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-start.sh mode=0755
+
+- name: MAGMA | create magma-stop.sh and store in /usr/lib/erlang/lib/magma/bin
+  sudo: true
+  action: template src=magma-stop.sh-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-stop.sh mode=0755
