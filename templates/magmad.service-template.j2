@@ -9,14 +9,14 @@ Type=oneshot
 #WorkingDirectory="{{ ansible_env.HOME}}"
 #Environment=HOME="{{ ansible_env.HOME}}"
 #Environment=NAME={{magma_daemon_name}}
-#Environment=ERLD="/usr/local/bin/erld"
+ERLD="/usr/local/bin/erld"
+ERL="/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput"
 #Environment=ERLD_LOG="/var/log/{{magma_daemon_name}}/{{magma_daemon_name}}.log"
-##Environment=ERL="/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput"
 #Environment=ERL_CONFIG="{{magma_config_dir}}/sys.config"
-#Environment=ERL_BOOT="/usr/lib/erlang/lib/magma/releases/1/magma"
+ERL_BOOT="/usr/lib/erlang/lib/magma/releases/1/magma"
 #Environment=COOKIE_FILE="/etc/{{magma_daemon_name}}/cookie"
 #Environment=NODE={{node_name}}
-#Environment=NODE_NAME="$NODE@{{ip_address}}"
+NODE_NAME="$NODE@{{ip_address}}"
 #Environment=TMPNODE="$NODE-tmp"
 #Environment=TIMEOUT=60
 #Environment=HEARTBEAT=22
@@ -29,3 +29,8 @@ Type=oneshot
 #Environment=LOCKFILE=$LOCKDIR/$NAME
 
 ExecStart=/bin/sh -c "echo test > /tmp/test.txt"
+
+ERL_COMMAND="${ERL} -config ${ERL_CONFIG} -name ${NODE_NAME} -setcookie {{cookie}} -boot ${ERL_BOOT} -shutdown_time 5000 +W w"
+# ERLD_COMMAND="$ERLD $ERLD_DEBUG -c $COOKIE_FILE -l $ERLD_LOG -p $PIDFILE -t $HEARTBEAT -T $HEARTBEAT_WARN -g $GRACE -r $RESTART_COUNT -i $# RESTART_INTERVAL -M $ROTATION_MODULE -F $ROTATION_FUNCTION -- $ERL_COMMAND"
+
+ExecStart=${ERL_COMMAND}
