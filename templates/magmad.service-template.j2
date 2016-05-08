@@ -11,6 +11,8 @@ User=root
 Group=root
 WorkingDirectory={{ ansible_env.HOME}}
 Environment=HOME={{ ansible_env.HOME}}
+Restart=always
+RestartSec=3
 
 ExecStart=/usr/lib/erlang/lib/magma/bin/magma-start.sh
 ExecStop=/usr/lib/erlang/lib/magma/bin/magma-stop.sh
