@@ -6,17 +6,20 @@ Wants=epmd.socket
 
 [Service]
 Type=oneshot
-#WorkingDirectory="{{ ansible_env.HOME}}"
-#Environment=HOME="{{ ansible_env.HOME}}"
+EnvironmentFile=-/etc/magmad/magmad-env
+User=root
+Group=root
+WorkingDirectory={{ ansible_env.HOME}}
+Environment=HOME={{ ansible_env.HOME}}
 #Environment=NAME={{magma_daemon_name}}
-ERLD="/usr/local/bin/erld"
-ERL="/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput"
+# ERLD="/usr/local/bin/erld"
+# ERL="/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput"
 #Environment=ERLD_LOG="/var/log/{{magma_daemon_name}}/{{magma_daemon_name}}.log"
 #Environment=ERL_CONFIG="{{magma_config_dir}}/sys.config"
-ERL_BOOT="/usr/lib/erlang/lib/magma/releases/1/magma"
+#ERL_BOOT="/usr/lib/erlang/lib/magma/releases/1/magma"
 #Environment=COOKIE_FILE="/etc/{{magma_daemon_name}}/cookie"
 #Environment=NODE={{node_name}}
-NODE_NAME="$NODE@{{ip_address}}"
+#NODE_NAME="$NODE@{{ip_address}}"
 #Environment=TMPNODE="$NODE-tmp"
 #Environment=TIMEOUT=60
 #Environment=HEARTBEAT=22
@@ -28,9 +31,6 @@ NODE_NAME="$NODE@{{ip_address}}"
 #Environment=LOCKDIR=/var/lock
 #Environment=LOCKFILE=$LOCKDIR/$NAME
 
-ExecStart=/bin/sh -c "echo test > /tmp/test.txt"
+#ExecStart=/bin/sh -c "echo test > /tmp/test.txt"
 
-ERL_COMMAND="${ERL} -config ${ERL_CONFIG} -name ${NODE_NAME} -setcookie {{cookie}} -boot ${ERL_BOOT} -shutdown_time 5000 +W w"
-# ERLD_COMMAND="$ERLD $ERLD_DEBUG -c $COOKIE_FILE -l $ERLD_LOG -p $PIDFILE -t $HEARTBEAT -T $HEARTBEAT_WARN -g $GRACE -r $RESTART_COUNT -i $# RESTART_INTERVAL -M $ROTATION_MODULE -F $ROTATION_FUNCTION -- $ERL_COMMAND"
-
-ExecStart=${ERL_COMMAND}
+ExecStart=/usr/local/bin/erl -pa {{magma_install_dir}}/magma/lib/*/ebin +Ktrue +B -noinput -config {{magma_config_dir}}/sys.config -name {{node_name}}@{{ip_address}} -setcookie {{cookie}} -boot /usr/lib/erlang/lib/magma/releases/1/magma -shutdown_time 5000 +W w

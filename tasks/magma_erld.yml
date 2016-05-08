@@ -45,6 +45,10 @@
   sudo: true
   action: template src=magmad.service-template.j2 dest=/etc/systemd/system/magmad.service
 
+- name: ERLD | Copy Env file
+  sudo: true
+  action: template src=magmad-env-template.j2 dest=/etc/magmad/magmad-env mode=0400
+
 - name: reload systemd
   command: systemctl daemon-reload
 
