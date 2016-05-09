@@ -1,4 +1,4 @@
 # tasks/main.yml
 
 - include: 'magma_install.yml'
-- include: 'magma_erld.yml'
+- include: 'magmad.yml'

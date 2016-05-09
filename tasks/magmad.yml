@@ -1,0 +1,27 @@
+# file: tasks/magmad.yml
+
+- name: MAGMAD | make dir for magma daemon
+  sudo: true
+  file: path=/etc/magmad state=directory mode=0755
+  # when: magma_downloaded.changed
+
+- name: MAGMAD | make /var/log/magmad
+  sudo: true
+  file: path=/var/log/magmad state=directory mode=0755
+  # when: magma_downloaded.changed
+
+- name: MAGMAD | Use the conf directory when starting magma
+  sudo: true
+  action: template src=magmad.service-template.j2 dest=/etc/systemd/system/magmad.service
+
+# - name: reload systemd
+#   command: systemctl daemon-reload
+
+# - name: EPMD | Start epmd
+#   sudo: true
+#   service: name=epmd.socket enabled=yes
+
+- name: MAGMAD | Start magmad
+  sudo: true
+  service: name=magmad state=restarted
+  # when: magma_downloaded.changed
