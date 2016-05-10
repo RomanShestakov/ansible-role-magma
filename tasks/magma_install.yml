@@ -10,17 +10,17 @@
 
 - name: MAGMA | build magma in /tmp/magma
   command: make chdir={{ magma_tmp }}
-  # when: magma_downloaded.changed
+  when: magma_downloaded.changed
 
 - name: MAGMA | make magma_install_dir - /usr/lib/erlang/lib
   sudo: true
   file: path={{ magma_install_dir }} state=directory owner={{ ansible_ssh_user }} mode=0755
-  # when: magma_downloaded.changed
+  when: magma_downloaded.changed
 
 - name: MAGMA | copy magma release from /tmp/magma into /usr/lib/erlang/lib/magma
   sudo: true
   command: cp -r {{ magma_tmp }}/_rel/{{ proj_name }} {{ magma_install_dir }}
-  # when: magma_downloaded.changed
+  when: magma_downloaded.changed
 
 - name: MAGMA | make /etc/magma to store sys.config
   sudo: true
