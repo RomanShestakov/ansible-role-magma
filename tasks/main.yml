@@ -2,5 +2,5 @@
 
 - include: 'magma_install.yml'
 - include: 'magmad.yml'
-- include: 'magmad_join.yml'
+- include: 'magma_join.yml'
   when: not join_node
