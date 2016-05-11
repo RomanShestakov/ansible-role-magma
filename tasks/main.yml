@@ -3,4 +3,4 @@
 - include: 'magma_install.yml'
 - include: 'magmad.yml'
 - include: 'magma_join.yml'
-  when: not join_node
+  when: not {{ join_node }}
