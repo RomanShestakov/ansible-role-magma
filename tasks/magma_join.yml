@@ -1,4 +1,6 @@
-- debug: msg="System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}"
+# tasks/magma_join.yml
+
+# - debug: msg="System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}"
 
 - name: MAGMA | join cluster nodes
   sudo: true
@@ -7,4 +9,4 @@
     - bin/magma-admin cluster join {{magma_join_node}}
     - bin/magma-admin cluster plan
     - bin/magma-admin cluster commit
-  #when: erld_downloaded.changed
+  when: magma_downloaded.changed

@@ -12,7 +12,9 @@
 
 - name: MAGMAD | Use the conf directory when starting magma
   sudo: true
-  action: template src=magmad.service-template.j2 dest=/etc/systemd/system/magmad.service
+  action: template src=magmad.service-template.j2
+          dest=/etc/systemd/system/magmad.service
+  when: magma_downloaded.changed
 
 # - name: EPMD | Start epmd
 #   sudo: true
