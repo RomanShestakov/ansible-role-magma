@@ -22,5 +22,5 @@
 
 - name: MAGMAD | Start magmad
   sudo: true
-  service: name=magmad state=restarted
+  service: name=magmad state=started enabled=yes
   when: magma_downloaded.changed
