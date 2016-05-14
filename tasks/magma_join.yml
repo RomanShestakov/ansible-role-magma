@@ -3,7 +3,7 @@
 # - debug: msg="System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}"
 
 - name: MAGMA | wait for magma service to become available
-  wait_for: port 8198
+  wait_for: port=8198
 
 - name: MAGMA | join cluster nodes
   sudo: true
