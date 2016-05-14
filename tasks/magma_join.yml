@@ -2,6 +2,9 @@
 
 # - debug: msg="System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}"
 
+- name: MAGMA | wait for magma service to become available
+  wait_for: port 8198
+
 - name: MAGMA | join cluster nodes
   sudo: true
   shell: 'cd /usr/lib/erlang/lib/magma; {{item}}'
@@ -9,4 +12,4 @@
     - bin/magma-admin cluster join {{magma_join_node}}
     - bin/magma-admin cluster plan
     - bin/magma-admin cluster commit
-  when: magma_downloaded.changed
+  #when: magma_downloaded.changed
