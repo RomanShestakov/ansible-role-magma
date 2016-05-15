@@ -14,7 +14,10 @@
 
 - name: MAGMA | make magma_install_dir - /usr/lib/erlang/lib
   sudo: true
-  file: path={{ magma_install_dir }} state=directory owner={{ ansible_ssh_user }} mode=0755
+  file: path={{ magma_install_dir }}
+        state=directory
+        owner={{ ansible_ssh_user }}
+        mode=0755
   when: magma_downloaded.changed
 
 - name: MAGMA | copy magma release from /tmp/magma into /usr/lib/erlang/lib/magma
@@ -29,18 +32,30 @@
 
 - name: MAGMA | create sys.config from template and store in /etc/magma/sys.config
   sudo: true
-  action: template src=sys.config-template.j2 dest={{ magma_config_dir }}/sys.config mode=0755
+  action: template
+          src=sys.config-template.j2
+          dest={{ magma_config_dir }}/sys.config
+          mode=0755
   when: magma_downloaded.changed
 
 - name: MAGMA | create magma-admin from template and store in /usr/lib/erlang/lib/magma/bin
   sudo: true
-  action: template src=magma-admin-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-admin mode=0755
+  action: template
+          src=magma-admin-template.j2
+          dest={{ magma_install_dir }}/magma/bin/magma-admin
+          mode=0755
   when: magma_downloaded.changed
 
 - name: MAGMA | create magma-start.sh and store in /usr/lib/erlang/lib/magma/bin
   sudo: true
-  action: template src=magma-start.sh-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-start.sh mode=0755
+  action: template
+          src=magma-start.sh-template.j2
+          dest={{ magma_install_dir }}/magma/bin/magma-start.sh
+          mode=0755
 
 - name: MAGMA | create magma-stop.sh and store in /usr/lib/erlang/lib/magma/bin
   sudo: true
-  action: template src=magma-stop.sh-template.j2 dest={{ magma_install_dir }}/magma/bin/magma-stop.sh mode=0755
+  action: template
+          src=magma-stop.sh-template.j2
+          dest={{ magma_install_dir }}/magma/bin/magma-stop.sh
+          mode=0755

@@ -9,9 +9,34 @@
 
 - name: MAGMA | join cluster nodes
   sudo: true
-  shell: 'cd /usr/lib/erlang/lib/magma; {{item}}'
-  with_items:
-    - bin/magma-admin cluster join {{magma_join_node}}
-    - bin/magma-admin cluster plan
-    - bin/magma-admin cluster commit
+  shell: "/usr/lib/erlang/lib/magma/bin/magma-admin cluster join {{magma_join_node}}"
+  register: magma_join_node
+  failed_when: magma_join_node.rc != 0
+  changed_when: "magma_join_node.rc == 0"
   #when: magma_downloaded.changed
+
+- name: MAGMA | apply cluster plan
+  sudo: true
+  shell: "/usr/lib/erlang/lib/magma/bin/magma-admin cluster plan"
+  register: magma_cluster_plan
+  failed_when: magma_cluster_plan.rc != 0
+  changed_when: "magma_cluster_plan.rc == 0"
+  #when: magma_downloaded.changed
+
+- name: MAGMA | commit cluster plan
+  sudo: true
+  shell: "/usr/lib/erlang/lib/magma/bin/magma-admin cluster commit"
+  register: magma_commit_plan
+  failed_when: magma_commit_plan.rc != 0
+  changed_when: "magma_commit_plan.rc == 0"
+  #when: magma_downloaded.changed
+
+# - name: MAGMA | join cluster nodes
+#   sudo: true
+#   shell: 'cd /usr/lib/erlang/lib/magma; {{item}}'
+#   register
+#   with_items:
+#     - bin/magma-admin cluster join {{magma_join_node}}
+#     - bin/magma-admin cluster plan
+#     - bin/magma-admin cluster commit
+#   #when: magma_downloaded.changed
