@@ -22,7 +22,7 @@
   register: magma_cluster_plan
   failed_when: magma_cluster_plan.rc != 0
   changed_when: "magma_cluster_plan.rc == 0"
-  #when: magma_downloaded.changed
+  when: magma_join_node.changed
 
 - name: MAGMA | commit cluster plan
   sudo: true
@@ -30,7 +30,7 @@
   register: magma_commit_plan
   failed_when: magma_commit_plan.rc != 0
   changed_when: "magma_commit_plan.rc == 0"
-  #when: magma_downloaded.changed
+  when: magma_join_node.changed
 
 # - name: MAGMA | join cluster nodes
 #   sudo: true
