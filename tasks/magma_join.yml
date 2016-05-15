@@ -11,7 +11,8 @@
   sudo: true
   shell: "/usr/lib/erlang/lib/magma/bin/magma-admin cluster join {{magma_join_node}}"
   register: magma_join_node
-  failed_when: magma_join_node.rc != 0
+  failed_when: >
+    magma_join_node.rc != 0 and ("This node is already a member of a cluster" not in magma_join_node.stderr)
   changed_when: "magma_join_node.rc == 0"
   #when: magma_downloaded.changed
 
